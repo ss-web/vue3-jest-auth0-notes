@@ -61,6 +61,9 @@ npm run test
   - `constants/` - directory for storing constant values used in the application
   - `store/` - Pinia files for managing the application state
   - `templates/` - Vue.js templates for rendering pages and components
+    - `views/` - directory for views templates
+    - `layouts/` - directory for layout templates
+    - `components/` - directory for reusable components
   - `tests/` - directory containing tests for application components and functionality
 - `public/` - directory for storing static resources such as HTML files, images, etc.
 
