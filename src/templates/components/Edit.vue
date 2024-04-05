@@ -13,6 +13,7 @@
 import { ref, computed, defineProps } from 'vue';
 import { useNotesStore } from '@/store';
 import { Note } from '@/interfaces';
+import {NOTE_TEXT_CANNOT_BE_EMPTY, CANNOT_HAVE_IDENTICAL_TEXT} from '@/constants/errors';
 
 const newNoteContent = ref('');
 const notesStores = useNotesStore();
@@ -25,21 +26,22 @@ const props = defineProps<{
 const notes = computed(() => notesStores.visibleNotes());
 newNoteContent.value = props.text;
 
-const type = computed(() => props.type || 'edit')
+const DEFAULT_TYPE = 'edit';
+const type = computed(() => props.type || DEFAULT_TYPE)
 const validationError = ref('');
 
 const emit = defineEmits();
 
 const saveNote = () => {
   if (!newNoteContent.value.trim()) {
-    validationError.value = 'Note text cannot be empty';
+    validationError.value = CANNOT_HAVE_IDENTICAL_TEXT;
     return;
   }
 
   const duplicateNote = notes.value.find((note: Note) => note.content === newNoteContent.value.trim());
 
   if (duplicateNote) {
-    validationError.value = 'You cannot have two notes with identical text';
+    validationError.value = NOTE_TEXT_CANNOT_BE_EMPTY;
     return;
   }
 

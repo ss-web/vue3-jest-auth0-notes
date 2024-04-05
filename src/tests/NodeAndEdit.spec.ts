@@ -3,6 +3,10 @@ import "@testing-library/jest-dom";
 import { fireEvent, render } from "@testing-library/vue";
 import { createPinia } from "pinia";
 
+import {
+  CANNOT_HAVE_IDENTICAL_TEXT,
+  NOTE_TEXT_CANNOT_BE_EMPTY,
+} from "@/constants/errors";
 import { useNotesStore } from "@/store";
 import { useUserStore } from "@/store/user";
 import Edit from "@/templates/components/Edit.vue";
@@ -74,7 +78,7 @@ describe("Note.vue", () => {
     const saveButton = getByRole("form-edit__save");
     await fireEvent.click(saveButton);
 
-    const errorMessage = getByText("Note text cannot be empty");
+    const errorMessage = getByText(NOTE_TEXT_CANNOT_BE_EMPTY);
     expect(errorMessage).toBeInTheDocument();
   });
 
@@ -89,9 +93,7 @@ describe("Note.vue", () => {
     const saveButton = getByRole("form-create__save");
     await fireEvent.click(saveButton);
 
-    const errorMessage = getByText(
-      "You cannot have two notes with identical text"
-    );
+    const errorMessage = getByText(CANNOT_HAVE_IDENTICAL_TEXT);
     expect(errorMessage).toBeInTheDocument();
   });
 
